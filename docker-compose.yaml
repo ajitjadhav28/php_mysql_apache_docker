@@ -1,0 +1,41 @@
+version: '3.9'
+services:
+  # PHP with apache
+  backend:
+    expose:
+      - 80
+    image: "php:8.1.2-apache"
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+
+  # MariaDB server
+  db:
+    image: mariadb:10.7.3
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: test
+      MARIADB_USER: john
+      MARIADB_PASSWORD: 123456
+    volumes:
+    - "./sql/init_sql:/docker-entrypoint-initdb.d"
+    - "./db:/var/lib/mysql"
+
+  # phpmyadmin server on db
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8090:80
+    environment:
+      # - PMA_ARBITRARY=1
+      - PMA_HOST=db
+      - PMA_USER=john
+      - PMA_PASSWORD=123456
+    depends_on:
+      - db
