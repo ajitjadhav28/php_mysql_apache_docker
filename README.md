@@ -20,7 +20,7 @@ https://www.apachefriends.org/index.html
 
 
 # Using this template
-After installing docker engine and docker compose on your system enter following command in termial / command prompt / powershell to start docker services:  
+After installing docker engine and docker compose on your system navigate to this directory and enter following command in termial / command prompt / powershell to start docker services:  
 
 `` docker-compose up ``
 
